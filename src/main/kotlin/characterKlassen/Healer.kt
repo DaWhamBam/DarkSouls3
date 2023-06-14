@@ -2,8 +2,8 @@ package characterKlassen
 
 import SLEEP_TIME
 
-class Healer(name: String, klasse: String, hp: Int, isBurning: Boolean, isPoisen: Boolean, isBleeding: Boolean, var healing: Int = 6):
-    Hero(name, klasse, hp, isBurning, isPoisen, isBleeding) {
+class Healer(name: String, klasse: String, hp: Int):
+    Hero(name, klasse, hp) {
 
     var attacks: MutableMap<String, Int> = mutableMapOf(
         "Handkantenschlag" to 20,

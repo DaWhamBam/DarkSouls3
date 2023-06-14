@@ -1,7 +1,7 @@
 package characterKlassen
 import SLEEP_TIME
 
-class Worrior(name: String, klasse: String, hp: Int, var strength: Int = 6):
+class Worrior(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
 
     var attacks: MutableMap<String, Int> = mutableMapOf(

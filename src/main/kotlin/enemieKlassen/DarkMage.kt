@@ -1,7 +1,7 @@
 package enemieKlassen
 
-class DarkMage(name: String, typ: String, hp: Int, isBurning: Boolean, isPoisen: Boolean, isBleeding: Boolean, var magic: Int = 6):
-    Enemie(name, typ, hp, isBurning, isPoisen, isBleeding)  {
+class DarkMage(name: String, typ: String, hp: Int):
+    Enemie(name, typ, hp)  {
 
     var attacks: MutableMap<String, Int> = mutableMapOf(
         "Feuerball" to 10,

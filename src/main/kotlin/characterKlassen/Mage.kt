@@ -2,8 +2,8 @@ package characterKlassen
 
 import SLEEP_TIME
 
-class Mage(name: String, klasse: String, hp: Int, isBurning: Boolean, isPoisen: Boolean, isBleeding: Boolean, var magic: Int = 6):
-    Hero(name, klasse, hp, isBurning, isPoisen, isBleeding) {
+class Mage(name: String, klasse: String, hp: Int):
+    Hero(name, klasse, hp) {
 
         var attacks: MutableMap<String, Int> = mutableMapOf(
             "Feuerball" to 50,

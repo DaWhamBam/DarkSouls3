@@ -1,7 +1,7 @@
 package enemieKlassen
 
-class Zombie(name: String, typ: String, hp: Int, isBurning: Boolean, isPoisen: Boolean, isBleeding: Boolean, var strength: Int = 6):
-    Enemie(name, typ, hp, isBurning, isPoisen, isBleeding) {
+class Zombie(name: String, typ: String, hp: Int):
+    Enemie(name, typ, hp) {
 
     var attacks: MutableMap<String, Int> = mutableMapOf(
         "Kratzer" to 10,

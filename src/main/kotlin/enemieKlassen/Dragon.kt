@@ -1,9 +1,10 @@
 package enemieKlassen
 
+import SLEEP_TIME
 import characterKlassen.Worrior
 
-class Dragon(name: String, typ: String, hp: Int, isBurning: Boolean, isPoisen: Boolean, isBleeding: Boolean, var strength: Int = 6):
-    Enemie(name, typ, hp, isBurning, isPoisen, isBleeding) {
+class Dragon(name: String, typ: String, hp: Int):
+    Enemie(name, typ, hp) {
 
     var attacks: MutableMap<String, Int> = mutableMapOf(
         "Feueratem" to 35,
@@ -18,6 +19,7 @@ class Dragon(name: String, typ: String, hp: Int, isBurning: Boolean, isPoisen: B
         var atkName = attacks.keys
         var attacke = atkName.random()
         println("${this.name} greift mit $attacke an!!")
+        Thread.sleep(SLEEP_TIME)
         var gegnerSchaden = attacks[attacke]!!
         return gegnerSchaden
     }
