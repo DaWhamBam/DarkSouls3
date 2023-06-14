@@ -1,6 +1,7 @@
 package characterKlassen
 
 import SLEEP_TIME
+import enemieKlassen.Enemie
 
 class Mage(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
@@ -11,7 +12,9 @@ class Mage(name: String, klasse: String, hp: Int):
             "Schutzschild" to 0 // schützt eine Runde den aktuellen Char
         )
 
-    fun atkChar(): Int {
+    fun atkChar(enemie: Enemie) {
+        kannAngegriffenWerden = true
+        println("${this.name} (${this.klasse}) ist an der Reihe. Aktuell hast du ${this.hp} HP.")
         var atkName = attacks.keys
 //        var itemName = inventory.keys
         println("Wähle deinen Angriff!")
@@ -26,9 +29,21 @@ class Mage(name: String, klasse: String, hp: Int):
         var eingabe = readln()
         var index = eingabe.toInt() - 1
         var attacke = atkName.elementAt(index)
-        var charSchaden = attacks[attacke]!!
-        return charSchaden
 
+        if (index == 2) {
+            Thread.sleep(SLEEP_TIME)
+            println("${this.name} (${this.klasse}) ist diese Runde geschützt!\n")
+            kannAngegriffenWerden = false
+
+        } else if(enemie.kannAngegriffenWerden == false){
+            println("${enemie.name} ist geschützt und nimmt kein schaden!")
+
+        } else {
+            var charSchaden= attacks[attacke]!!
+            enemie.hp -= charSchaden
+            println("Du triffst!! ${enemie.name} bekommt $charSchaden Schaden und hat nur noch ${enemie.hp} HP\n")
+
+        }
     }
 
 //    Liste Intventory evtl. muss das ein Map sein

@@ -1,6 +1,7 @@
 package enemieKlassen
 
 import SLEEP_TIME
+import characterKlassen.Hero
 import characterKlassen.Worrior
 
 class Dragon(name: String, typ: String, hp: Int):
@@ -15,14 +16,40 @@ class Dragon(name: String, typ: String, hp: Int):
         "Totbringer" to 65 // ein Angriff der am besten eine geringere Change hat gewählt zu werden als die anderen
         )
 
-    fun angriffGegner(): Int{
+    fun angriffGegner(hero: Hero){
+        kannAngegriffenWerden = true
+        println("${this.name} macht sich bereit für seinen Angriff!")
+        Thread.sleep(SLEEP_TIME)
         var atkName = attacks.keys
         var attacke = atkName.random()
         println("${this.name} greift mit $attacke an!!")
         Thread.sleep(SLEEP_TIME)
-        var gegnerSchaden = attacks[attacke]!!
-        return gegnerSchaden
+
+        if (attacke == "Flügelblock") {
+            kannAngegriffenWerden = false
+            println("${this.name} schützt sich!\n")
+
+        }else if (hero.kannAngegriffenWerden == true) {
+            var gegnerSchaden = attacks[attacke]!!
+            var opfer = hero
+            opfer.hp -= gegnerSchaden
+            Thread.sleep(SLEEP_TIME)
+            println("${opfer.name} bekommt $gegnerSchaden und hat nur noch ${opfer.hp} HP!!\n")
+        } else{
+            println("${hero.name} ist durch seinen Schutz geschützt!\n")
+        }
     }
+
+
+
+//    fun angriffGegner(): Int{
+//        var atkName = attacks.keys
+//        var attacke = atkName.random()
+//        println("${this.name} greift mit $attacke an!!")
+//        Thread.sleep(SLEEP_TIME)
+//        var gegnerSchaden = attacks[attacke]!!
+//        return gegnerSchaden
+//    }
 
 
 

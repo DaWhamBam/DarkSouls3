@@ -21,6 +21,8 @@ fun main() {
     charListeMain.charListe.add(heiler1)
 
 
+
+
 //    Gegner
 
     var enemieListeMain = Arena()
@@ -67,44 +69,29 @@ fun main() {
 
 
     do {
-
+        // Krieger kämpft
         if (dragonBoss.hp > 0 && krieger1.hp > 0) {
 
-            println("Der Krieger ist an der Reihe. Aktuell hast du ${krieger1.hp} HP.")
-            var schadenVonKrieger = krieger1.atkChar()
-            dragonBoss.hp -= schadenVonKrieger
-            Thread.sleep(SLEEP_TIME)
-            println("Du triffst!! ${dragonBoss.name} bekommt $schadenVonKrieger Schaden und hat nur noch ${dragonBoss.hp} HP\n")
+            krieger1.atkChar(dragonBoss)
         }
 
-
+        // Magier kämpft
         if (dragonBoss.hp > 0 && magier1.hp > 0) {
 
-            println("Der Magier ist an der Reihe. Aktuell hast du ${magier1.hp} HP.")
-            var schadenVonMagier = magier1.atkChar()
-            dragonBoss.hp -= schadenVonMagier
-            Thread.sleep(SLEEP_TIME)
-            println("Du triffst!! ${dragonBoss.name} bekommt $schadenVonMagier Schaden und hat nur noch ${dragonBoss.hp} HP\n")
+            magier1.atkChar(dragonBoss)
         }
 
+        // Heiler kämpft
         if (dragonBoss.hp > 0 && heiler1.hp > 0) {
 
-            println("Der Heiler ist an der Reihe. Aktuell hast du ${heiler1.hp} HP.")
-            var schadenVonHeiler = heiler1.atkChar()
-            dragonBoss.hp -= schadenVonHeiler
-            Thread.sleep(SLEEP_TIME)
-            println("Du triffst!! ${dragonBoss.name} bekommt $schadenVonHeiler Schaden und hat nur noch ${dragonBoss.hp} HP\n")
+            heiler1.atkChar(dragonBoss)
         }
 
+        // Gegner kämpft
         if (dragonBoss.hp > 0) {
 
-            println("${dragonBoss.name} macht sich bereit für seinen Angriff!")
-            Thread.sleep(SLEEP_TIME)
-            var schadenGegenChar = dragonBoss.angriffGegner()
             var opfer = charListeMain.charListe.random()
-            opfer.hp -= schadenGegenChar
-            Thread.sleep(SLEEP_TIME)
-            println("${opfer.name} bekommt $schadenGegenChar und hat nur noch ${opfer.hp} HP!!\n")
+            dragonBoss.angriffGegner(opfer)
 
         } else {
             enemieListeMain.enemieListe.remove(dragonBoss)
