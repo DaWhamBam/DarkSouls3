@@ -1,5 +1,6 @@
 package characterKlassen
 
+import Arena
 import SLEEP_TIME
 import enemieKlassen.Enemie
 
@@ -12,13 +13,12 @@ class Healer(name: String, klasse: String, hp: Int):
         "Schützende Hand" to 0 // schützt eine Runde den aktuellen Char
     )
 
-    fun atkChar(enemie: Enemie) {
+    fun atkChar(enemie: Enemie, arena: Arena) {
         kannAngegriffenWerden = true
         println("${this.name} (${this.klasse}) ist an der Reihe. Aktuell hast du ${this.hp} HP.")
         var atkName = attacks.keys
 //        var itemName = inventory.keys
         println("Wähle deinen Angriff!")
-//        Thread.sleep(SLEEP_TIME)
         println(
             """
             1: ${(atkName.elementAt(0))}
@@ -32,9 +32,18 @@ class Healer(name: String, klasse: String, hp: Int):
 
         if (index == 1) {
             var charHeilung = attacks[attacke]!!
-            this.hp += charHeilung
+            var char = arena.charListe
+            println("""
+                1: ${char.elementAt(0).name}
+                2: ${char.elementAt(1).name}
+                3: ${char.elementAt(2).name}
+            """.trimIndent())
+            var eingabeHeilung = readln()
+            var indexHeilung = eingabeHeilung.toInt() - 1
+            var geheilter = arena.charListe.elementAt(indexHeilung)
+            geheilter.hp += charHeilung
             Thread.sleep(SLEEP_TIME)
-            println("${this.name} (${this.klasse}) heilt sich selbst!\n")
+            println("${this.name} (${this.klasse}) heilt ${geheilter.name} und hat nun ${geheilter.hp}\n")
 
         } else if (index == 2){
             Thread.sleep(SLEEP_TIME)
