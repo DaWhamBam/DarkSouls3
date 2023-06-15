@@ -82,8 +82,8 @@ fun main() {
         // Gegner kämpft
         if (dragonBoss.hp > 0) {
 
-            var opfer = arena.charListe.random()
-            dragonBoss.angriffGegner(opfer, arena)
+            var helden = arena.charListe.random()
+            dragonBoss.angriffGegner(helden, arena)
 //            arena.enemieListe.
 
         } else {
