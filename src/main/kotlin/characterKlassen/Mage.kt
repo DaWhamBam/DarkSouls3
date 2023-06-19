@@ -1,24 +1,23 @@
 package characterKlassen
 
+import Arena
 import SLEEP_TIME
 import enemieKlassen.Enemie
 
 class Mage(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
 
-        var attacks: MutableMap<String, Int> = mutableMapOf(
+        override var attacks: MutableMap<String, Int> = mutableMapOf(
             "Feuerball" to 50,
             "Inferno" to 30, // trifft alle
             "Schutzschild" to 0 // schützt eine Runde den aktuellen Char
         )
 
-    fun atkChar(enemie: Enemie) {
+    override fun atkChar(enemie: Enemie, arena: Arena) {
         kannAngegriffenWerden = true
         println("${this.name} (${this.klasse}) ist an der Reihe. Aktuell hast du ${this.hp} HP.")
         var atkName = attacks.keys
-//        var itemName = inventory.keys
         println("Wähle deinen Angriff!")
-//        Thread.sleep(SLEEP_TIME)
         println(
             """
             1: ${(atkName.elementAt(0))}

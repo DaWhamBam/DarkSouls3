@@ -7,17 +7,16 @@ import enemieKlassen.Enemie
 class Healer(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
 
-    var attacks: MutableMap<String, Int> = mutableMapOf(
+    override var attacks: MutableMap<String, Int> = mutableMapOf(
         "Handkantenschlag" to 20,
         "Heilen" to 30, // trifft ein einzelnen Char
         "Schützende Hand" to 0 // schützt eine Runde den aktuellen Char
     )
 
-    fun atkChar(enemie: Enemie, arena: Arena) {
+    override fun atkChar(enemie: Enemie, arena: Arena) {
         kannAngegriffenWerden = true
         println("${this.name} (${this.klasse}) ist an der Reihe. Aktuell hast du ${this.hp} HP.")
         var atkName = attacks.keys
-//        var itemName = inventory.keys
         println("Wähle deinen Angriff!")
         println(
             """
@@ -43,7 +42,7 @@ class Healer(name: String, klasse: String, hp: Int):
             var geheilter = arena.charListe.elementAt(indexHeilung)
             geheilter.hp += charHeilung
             Thread.sleep(SLEEP_TIME)
-            println("${this.name} (${this.klasse}) heilt ${geheilter.name} und hat nun ${geheilter.hp}\n")
+            println("${this.name} (${this.klasse}) heilt ${geheilter.name} und hat nun ${geheilter.hp} HP.\n")
 
         } else if (index == 2){
             Thread.sleep(SLEEP_TIME)

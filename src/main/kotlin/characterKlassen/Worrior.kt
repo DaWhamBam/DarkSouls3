@@ -1,4 +1,5 @@
 package characterKlassen
+import Arena
 import SLEEP_TIME
 import enemieKlassen.Dragon
 import enemieKlassen.Enemie
@@ -6,19 +7,17 @@ import enemieKlassen.Enemie
 class Worrior(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
 
-    var attacks: MutableMap<String, Int> = mutableMapOf(
+    override var attacks: MutableMap<String, Int> = mutableMapOf(
         "Schwerthieb" to 50,
         "Rundumschlag" to 30, // trifft alle
         "Schildblock" to 0 // schützt eine Runde den aktuellen Char
     )
 
-    fun atkChar(enemie: Enemie) {
+    override fun atkChar(enemie: Enemie, arena: Arena) {
         kannAngegriffenWerden = true
         println("${this.name} (${this.klasse}) ist an der Reihe. Aktuell hast du ${this.hp} HP.")
         var atkName = attacks.keys
-//        var itemName = inventory.keys
         println("Wähle deinen Angriff!")
-//        Thread.sleep(SLEEP_TIME)
         println(
             """
             1: ${(atkName.elementAt(0))}
@@ -39,7 +38,7 @@ class Worrior(name: String, klasse: String, hp: Int):
             println("${enemie.name} ist geschützt und nimmt kein schaden!")
 
         } else {
-            var charSchaden= attacks[attacke]!!
+            var charSchaden = attacks[attacke]!!
             enemie.hp -= charSchaden
             println("Du triffst!! ${enemie.name} bekommt $charSchaden Schaden und hat nur noch ${enemie.hp} HP\n")
         }

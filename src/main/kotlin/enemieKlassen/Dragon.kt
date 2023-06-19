@@ -17,7 +17,7 @@ class Dragon(name: String, typ: String, hp: Int):
         "Totbringer" to 65 // ein Angriff der am besten eine geringere Change hat gewählt zu werden als die anderen
     )
 
-    fun angriffGegner(hero: Hero, arena: Arena) {
+    override fun angriffGegner(hero: Hero, arena: Arena) {
         kannAngegriffenWerden = true
         println("${this.name} macht sich bereit für seinen Angriff!")
         Thread.sleep(SLEEP_TIME)
@@ -108,19 +108,33 @@ class Dragon(name: String, typ: String, hp: Int):
 
             in 86..90 -> {
 
-                var hilfeRufListe = listOf<Enemie>(
-                    Zombie("Zombie1", "Untot", 100),
-                    Zombie("Zombie2", "Untot", 100),
-                    Zombie("Zombie3", "Untot", 100),
-                    Zombie("Zombie4", "Untot", 100),
-                    DarkMage("Dunkler Magier 1", "Magie", 100),
-                    DarkMage("Dunkler Magier 1", "Magie", 100),
-                    DarkMage("Dunkler Magier 1", "Magie", 100),
-                    DarkMage("Dunkler Magier 1", "Magie", 100)
-                ).random()
+                if (arena.enemieListe.size <= 1) {
+                    var hilfeRufListe = listOf<Enemie>(
+                        Zombie("Zombie159", "Untot", 100),
+                        Zombie("Zombie3522", "Untot", 100),
+                        Zombie("Zombie695", "Untot", 100),
+                        Zombie("Zombie5132", "Untot", 100),
+                        Zombie("Zombie451", "Untot", 100),
+                        Zombie("Zombie9521", "Untot", 100),
+                        Zombie("Zombie324", "Untot", 100),
+                        Zombie("Zombie55", "Untot", 100),
+                        Zombie("Zombie16", "Untot", 100),
+                        Zombie("Zombie6231", "Untot", 100),
+                        Zombie("Zombie3354", "Untot", 100),
+                        Zombie("Zombie65", "Untot", 100),
+                        Zombie("Zombie1", "Untot", 100),
+                        Zombie("Zombie85", "Untot", 100),
+                        DarkMage("Dunkler Magier Ron", "Magie", 100),
+                        DarkMage("Dunkler Magier Harry", "Magie", 100),
+                        DarkMage("Dunkler Magier Hermine", "Magie", 100),
+                        DarkMage("Dunkler Magier Snape", "Magie", 100)
+                    ).random()
 
-                arena.enemieListe.add(hilfeRufListe)
-
+                    arena.enemieListe.add(hilfeRufListe)
+                    println("Smaug hat sich Hilfe an seine Seite geholt!\n")
+                } else {
+                    println("Smaug´s Hilferufe wurde nicht erhört!\n")
+                }
             }
 
             in 91..100 -> {
@@ -143,63 +157,3 @@ class Dragon(name: String, typ: String, hp: Int):
         }
     }
 }
-
-
-
-
-//if (hero.kannAngegriffenWerden == true) {
-//    var attacke = atkName.elementAt(4)
-//    println("${this.name} greift mit $attacke an!!")
-//    Thread.sleep(SLEEP_TIME)
-//    var gegnerSchaden = attacks[attacke]!!
-//    var opfer = hero
-//    opfer.hp -= gegnerSchaden
-//    Thread.sleep(SLEEP_TIME)
-//    println("${opfer.name} bekommt $gegnerSchaden und hat nur noch ${opfer.hp} HP!!\n")
-//} else{
-//    var attacke = atkName.elementAt(4)
-//    println("${this.name} greift mit $attacke an!!")
-//    Thread.sleep(SLEEP_TIME)
-//    println("${hero.name} ist durch seinen Schutz geschützt!\n")
-//}
-//}
-
-
-
-//    fun angriffGegner(hero: Hero){
-//        kannAngegriffenWerden = true
-//        println("${this.name} macht sich bereit für seinen Angriff!")
-//        Thread.sleep(SLEEP_TIME)
-//        var atkName = attacks.keys
-//        var attacke = atkName.random()
-//        println("${this.name} greift mit $attacke an!!")
-//        Thread.sleep(SLEEP_TIME)
-//
-//        if (attacke == "Flügelblock") {
-//            kannAngegriffenWerden = false
-//            println("${this.name} schützt sich!\n")
-//
-//        }else if (hero.kannAngegriffenWerden == true) {
-//            var gegnerSchaden = attacks[attacke]!!
-//            var opfer = hero
-//            opfer.hp -= gegnerSchaden
-//            Thread.sleep(SLEEP_TIME)
-//            println("${opfer.name} bekommt $gegnerSchaden und hat nur noch ${opfer.hp} HP!!\n")
-//        } else{
-//            println("${hero.name} ist durch seinen Schutz geschützt!\n")
-//        }
-//    }
-
-
-
-//    fun angriffGegner(): Int{
-//        var atkName = attacks.keys
-//        var attacke = atkName.random()
-//        println("${this.name} greift mit $attacke an!!")
-//        Thread.sleep(SLEEP_TIME)
-//        var gegnerSchaden = attacks[attacke]!!
-//        return gegnerSchaden
-//    }
-
-
-

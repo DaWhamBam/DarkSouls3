@@ -20,18 +20,16 @@ fun main() {
     arena.charListe.add(magier1)
     arena.charListe.add(heiler1)
 
-
-
-
 //    Gegner
-
-
 
     var dragonBoss = Dragon("Smaug", "Feuer", 100)
 
     arena.enemieListe.add(dragonBoss)
 
 
+
+
+//    Hier beginnt das Spiel
 
     println("""
         
@@ -61,52 +59,15 @@ fun main() {
 
 
     do {
-        // Krieger kämpft
-        if (dragonBoss.hp > 0 && krieger1.hp > 0) {
 
-            krieger1.atkChar(dragonBoss)
-        }
+        spielerZug(arena)
 
-        // Magier kämpft
-        if (dragonBoss.hp > 0 && magier1.hp > 0) {
+        gegnerZug(arena)
 
-            magier1.atkChar(dragonBoss)
-        }
-
-        // Heiler kämpft
-        if (dragonBoss.hp > 0 && heiler1.hp > 0) {
-
-            heiler1.atkChar(dragonBoss, arena)
-        }
-
-        // Gegner kämpft
-        if (dragonBoss.hp > 0) {
-
-            var helden = arena.charListe.random()
-            dragonBoss.angriffGegner(helden, arena)
-//            arena.enemieListe.
-
-        } else {
-            arena.enemieListe.remove(dragonBoss)
-        }
-
-//        if(arena.enemieListe.elementAt(1) == Enemie("Zombie1", "Untot", 100))
-
-
-        if (krieger1.hp < 0) {
-            arena.charListe.remove(krieger1)
-        }
-
-        if (magier1.hp < 0){
-            arena.charListe.remove(magier1)
-        }
-
-        if (heiler1.hp < 0){
-            arena.charListe.remove(heiler1)
-        }
-
+        heldGestorben(arena)
 
     } while (arena.charListe.isNotEmpty() && arena.enemieListe.isNotEmpty())
+
 
     if (arena.enemieListe.isEmpty()) {
         println("Du hast gesiegt die Welt ist gerettet und kann erneut erblühen! Good Job, Mate!")
@@ -114,5 +75,92 @@ fun main() {
         println("Das Böse hat gesiegt und die Welt wird untergehen! Blöd gelaufen...")
     }
 }
+
+
+/*
+Der Angriff der Heldentruppe findet hier statt.
+Anfangs soll entschieden werden ob das Inventar aufgerufen werden soll oder ein Angriff
+stattfinden soll.
+Bevor der Angirff gewählt wird, wird ein Ziel(Gegner) ausgesucht.
+ */
+fun spielerZug(arena: Arena) {
+
+// Auswahl Kampf / Inventory
+    for (held in arena.charListe) {
+
+        if (arena.enemieListe.size == 0) break
+
+//    Wer soll angegriffen werden
+        if (arena.enemieListe.size > 1) {
+            println("Wenn möchtest du engreifen?")
+            println(
+                """
+            1: ${(arena.enemieListe.elementAt(0).name)}
+            2: ${(arena.enemieListe.elementAt(1).name)}
+          
+        """.trimIndent()
+            )
+            var eingabe = readln()
+            var index = eingabe.toInt() - 1
+            var gegnerWahl = arena.enemieListe.elementAt(index)
+            held.atkChar(gegnerWahl, arena)
+
+            if (gegnerWahl.hp <= 0) {
+                arena.enemieListe.remove(gegnerWahl)
+                println("${gegnerWahl.name} wurde besiegt!\n")
+            }
+
+
+        } else {
+            held.atkChar(arena.enemieListe[0], arena)
+            if (arena.enemieListe[0].hp == 0) {
+                arena.enemieListe.remove(arena.enemieListe[0])
+                println("Gegner wurde besiegt!\n")
+                break
+            }
+
+        }
+//    Inventar evtl Fun
+    }
+}
+
+
+    /* In der Funktion werden über die for Schleife die einzelnen objekte in der Liste genommen um einen Angriff auszuführen.
+Der Drache wird immer der erste Gegner sein und hat inherhalb der Angriffs Funktion die Möglichkeit weiter Gegner
+erscheinen zu lassen.
+Damit das alles klappt wird eine Kopie der enemieListe erstellt.
+ */
+
+    fun gegnerZug(arena: Arena) {
+        for (enemie in arena.enemieListe.toList()) {
+            if (enemie is Dragon) {
+                if (enemie.hp > 0) {
+
+                    var helden = arena.charListe.random()
+                    enemie.angriffGegner(helden, arena)
+                } else {
+                    arena.enemieListe.remove(enemie)
+                }
+                continue
+            }
+            if (enemie.hp > 0) {
+
+                var helden = arena.charListe.random()
+                enemie.angriffGegner(helden, arena)
+            } else {
+                arena.enemieListe.remove(enemie)
+            }
+        }
+    }
+
+    /*
+Hier wird kontrolliert ob ein Held noch am Leben ist und aus der Liste entfernt.
+ */
+    fun heldGestorben(arena: Arena) {
+        for (held in arena.charListe) {
+            if (held.hp <= 0)
+                arena.charListe.remove((held))
+        }
+    }
 
 
