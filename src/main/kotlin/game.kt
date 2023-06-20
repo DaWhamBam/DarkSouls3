@@ -27,7 +27,8 @@ fun main() {
 
 
 
-/*    Hier beginnt das Spiel.
+/*
+Hier beginnt das Spiel.
 Das Spiel geht so lange bis entweder alle Gegner oder alle Helden auf den Feld besiegt sind (jeweilige Liste ist leer).
 Gegner sind in der class Arena in der Liste enemieListe
 Helden sind in der class Arena in der Liste charListe
@@ -106,7 +107,7 @@ fun spielerZug(arena: Arena) {
         var eingabe = readln()
         var indexStartWahl = eingabe.toInt() - 1
 
-//Wahl des Items
+//  Wahl des Items
         if (indexStartWahl == 1) {
             println("Welchen Gegenstand möchtest du einsetzen?")
             println(
@@ -201,7 +202,8 @@ fun spielerZug(arena: Arena) {
             }
 
 
-/* Wenn das Inventar nicht aufgerufen wird sondern gleich ein Angriff stattfinden soll geht es hier los
+/*
+Wenn das Inventar nicht aufgerufen wird sondern gleich ein Angriff stattfinden soll geht es hier los
 Sind mindestens 2 Gegner auf dem Feld wird vorab gefragt welcher Gegner angegriffen werden soll.
 Wird ein Gegner besiegt wird er aus der enemieListe entfernt
  */
@@ -232,7 +234,6 @@ Wird ein Gegner besiegt wird er aus der enemieListe entfernt
                     println("Gegner wurde besiegt!\n")
                     break
                 }
-
             }
         }
     }
