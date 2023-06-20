@@ -13,12 +13,26 @@ class Dragon(name: String, typ: String, hp: Int):
         "Flügelschlag" to 30, // trifft alle
         "Rasierklaue" to 40,
         "Flügelblock" to 0, // schützt eine Runde den aktuellen Char
-        "Hilferuf" to 0, // ruft einen gehilfen zur seite  ---- evtl wieder separate Liste ---- Liste mit verschieden Monstern drinnen die random rausgenommen werden und dann aus der Liste entfernt werden
+        "Hilferuf" to 0, // ruft einen gehilfen zur seite  ---- evtl wieder separate Liste ---- Liste mit verschieden Monstern drinnen die random genommen werden. Maximal kann einer zur Hilfe gerufen werden.
         "Totbringer" to 65 // ein Angriff der am besten eine geringere Change hat gewählt zu werden als die anderen
     )
 
     override fun angriffGegner(hero: Hero, arena: Arena) {
         kannAngegriffenWerden = true
+
+        if (hero.hatSchutzStein == true) {
+            attacks["Feueratem"] = 25
+            attacks["Flügelschlag"] = 20
+            attacks["Rasierklaue"] = 30
+            attacks["Totbringer"] = 55
+
+        } else {
+            attacks["Feueratem"] = 35
+            attacks["Flügelschlag"] = 30
+            attacks["Rasierklaue"] = 40
+            attacks["Totbringer"] = 65
+        }
+
         println("${this.name} macht sich bereit für seinen Angriff!")
         Thread.sleep(SLEEP_TIME)
         var atkName = attacks.keys
@@ -144,9 +158,12 @@ class Dragon(name: String, typ: String, hp: Int):
                     Thread.sleep(SLEEP_TIME)
                     var gegnerSchaden = attacks[attacke]!!
                     var opfer = hero
+
+
                     opfer.hp -= gegnerSchaden
                     Thread.sleep(SLEEP_TIME)
                     println("${opfer.name} bekommt $gegnerSchaden und hat nur noch ${opfer.hp} HP!!\n")
+
                 } else{
                     var attacke = atkName.elementAt(5)
                     println("${this.name} greift mit $attacke an!!")

@@ -14,9 +14,18 @@ class Zombie(name: String, typ: String, hp: Int):
         "Umfallen" to 0, // enemie setzt für eine Runde aus
     )
 
-
     override fun angriffGegner(hero: Hero, arena: Arena) {
         kannAngegriffenWerden = true
+
+        if (hero.hatSchutzStein == true) {
+            attacks["Kratzer"] = 5
+            attacks["Gift"] = 1
+
+        } else {
+            attacks["Kratzer"] = 10
+            attacks["Gift"] = 5
+        }
+
         println("${this.name} macht sich bereit für seinen Angriff!")
         Thread.sleep(SLEEP_TIME)
         var atkName = attacks.keys
@@ -52,7 +61,7 @@ class Zombie(name: String, typ: String, hp: Int):
                     var opfer3 = arena.charListe.elementAt(2)
 
                     if(opfer1.kannAngegriffenWerden == true){
-                        println("${opfer1.name} bekommt $gegnerSchaden und hat nur noch ${opfer1.hp} HP!!")
+                        println("${opfer1.name} bekommt $gegnerSchaden Schaden und hat nur noch ${opfer1.hp} HP!!")
                         opfer1.hp -= gegnerSchaden
                     } else {
                         println("${opfer1.name} ist durch seinen Schutz geschützt!")
@@ -66,7 +75,7 @@ class Zombie(name: String, typ: String, hp: Int):
                     }
 
                     if(opfer3.kannAngegriffenWerden == true){
-                        println("${opfer3.name} bekommt $gegnerSchaden und hat nur noch ${opfer3.hp} HP!!\n")
+                        println("${opfer3.name} bekommt $gegnerSchaden Schaden und hat nur noch ${opfer3.hp} HP!!\n")
                         opfer3.hp -= gegnerSchaden
                     } else {
                         println("${opfer3.name} ist durch seinen Schutz geschützt!\n")

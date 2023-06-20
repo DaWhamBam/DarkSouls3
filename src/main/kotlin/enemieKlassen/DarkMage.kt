@@ -15,6 +15,18 @@ class DarkMage(name: String, typ: String, hp: Int):
     )
     override fun angriffGegner(hero: Hero, arena: Arena) {
         kannAngegriffenWerden = true
+
+        if (hero.hatSchutzStein == true) {
+            attacks["Feuerball"] = 5
+            attacks["Eispfeil"] = 5
+            attacks["Elektroblitz"] = 5
+
+        } else {
+            attacks["Feuerball"] = 10
+            attacks["Eispfeil"] = 10
+            attacks["Elektroblitz"] = 10
+        }
+
         println("${this.name} macht sich bereit für seinen Angriff!")
         Thread.sleep(SLEEP_TIME)
         var atkName = attacks.keys

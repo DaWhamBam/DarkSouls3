@@ -18,6 +18,4 @@ open class Enemie(var name: String, var typ: String, var hp: Int) {
     open fun angriffGegner(hero: Hero, arena: Arena){
         println("Noch nicht implementiert. Bitte in Unterklasse überschreiben!")
     }
-
-
 }
