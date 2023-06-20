@@ -76,22 +76,22 @@ class Dragon(name: String, typ: String, hp: Int):
                     var opfer3 = arena.charListe.elementAt(2)
 
                     if(opfer1.kannAngegriffenWerden == true){
-                        println("${opfer1.name} bekommt $gegnerSchaden und hat nur noch ${opfer1.hp} HP!!")
                         opfer1.hp -= gegnerSchaden
+                        println("${opfer1.name} bekommt $gegnerSchaden HP Schaden und hat nur noch ${opfer1.hp} HP!!")
                     } else {
                         println("${opfer1.name} ist durch seinen Schutz geschützt!")
                     }
 
                     if(opfer2.kannAngegriffenWerden == true){
-                        println("${opfer2.name} bekommt $gegnerSchaden und hat nur noch ${opfer2.hp} HP!!")
                         opfer2.hp -= gegnerSchaden
+                        println("${opfer2.name} bekommt $gegnerSchaden HP Schaden und hat nur noch ${opfer2.hp} HP!!")
                     } else {
                         println("${opfer2.name} ist durch seinen Schutz geschützt!")
                     }
 
                     if(opfer3.kannAngegriffenWerden == true){
-                        println("${opfer3.name} bekommt $gegnerSchaden und hat nur noch ${opfer3.hp} HP!!\n")
                         opfer3.hp -= gegnerSchaden
+                        println("${opfer3.name} bekommt $gegnerSchaden HP Schaden und hat nur noch ${opfer3.hp} HP!!\n")
                     } else {
                         println("${opfer3.name} ist durch seinen Schutz geschützt!\n")
                     }
@@ -132,24 +132,24 @@ class Dragon(name: String, typ: String, hp: Int):
 
                 if (arena.enemieListe.size <= 1) {
                     var hilfeRufListe = listOf<Enemie>(
-                        Zombie("Zombie159", "Untot", 100),
-                        Zombie("Zombie3522", "Untot", 100),
-                        Zombie("Zombie695", "Untot", 100),
-                        Zombie("Zombie5132", "Untot", 100),
-                        Zombie("Zombie451", "Untot", 100),
-                        Zombie("Zombie9521", "Untot", 100),
-                        Zombie("Zombie324", "Untot", 100),
-                        Zombie("Zombie55", "Untot", 100),
-                        Zombie("Zombie16", "Untot", 100),
-                        Zombie("Zombie6231", "Untot", 100),
-                        Zombie("Zombie3354", "Untot", 100),
-                        Zombie("Zombie65", "Untot", 100),
-                        Zombie("Zombie1", "Untot", 100),
-                        Zombie("Zombie85", "Untot", 100),
-                        DarkMage("Dunkler Magier Ron", "Magie", 100),
-                        DarkMage("Dunkler Magier Harry", "Magie", 100),
-                        DarkMage("Dunkler Magier Hermine", "Magie", 100),
-                        DarkMage("Dunkler Magier Snape", "Magie", 100)
+                        Zombie("Zombie159", "Untot", 200),
+                        Zombie("Zombie3522", "Untot", 200),
+                        Zombie("Zombie695", "Untot", 200),
+                        Zombie("Zombie5132", "Untot", 200),
+                        Zombie("Zombie451", "Untot", 200),
+                        Zombie("Zombie9521", "Untot", 200),
+                        Zombie("Zombie324", "Untot", 200),
+                        Zombie("Zombie55", "Untot", 200),
+                        Zombie("Zombie16", "Untot", 200),
+                        Zombie("Zombie6231", "Untot", 200),
+                        Zombie("Zombie3354", "Untot", 200),
+                        Zombie("Zombie65", "Untot", 200),
+                        Zombie("Zombie1", "Untot", 200),
+                        Zombie("Zombie85", "Untot", 200),
+                        DarkMage("Dunkler Magier Ron", "Magie", 200),
+                        DarkMage("Dunkler Magier Harry", "Magie", 200),
+                        DarkMage("Dunkler Magier Hermine", "Magie", 200),
+                        DarkMage("Dunkler Magier Snape", "Magie", 200)
                     ).random()
 
                     arena.enemieListe.add(hilfeRufListe)

@@ -11,9 +11,9 @@ fun main() {
 
     val arena = Arena()
 
-    var krieger1 = Worrior("Gladius", "Krieger", 10)
-    var magier1 = Mage("Lenni", "Magier", 10)
-    var heiler1 = Healer("Sienna", "Support", 10)
+    var krieger1 = Worrior("Gladius", "Krieger", 300)
+    var magier1 = Mage("Lenni", "Magier", 300)
+    var heiler1 = Healer("Sienna", "Support", 300)
 
     arena.charListe.add(krieger1)
     arena.charListe.add(magier1)
@@ -21,7 +21,7 @@ fun main() {
 
 //    Gegner
 
-    var dragonBoss = Dragon("Smaug", "Feuer", 100)
+    var dragonBoss = Dragon("Smaug", "Feuer", 1000)
 
     arena.enemieListe.add(dragonBoss)
 
@@ -171,9 +171,12 @@ fun spielerZug(arena: Arena) {
                     var eingabe = readln()
                     var index = eingabe.toInt() - 1
                     var gegnerWahl = arena.enemieListe.elementAt(index)
-                    gegnerWahl.hp -= 10
-
-                    println("${gegnerWahl.name} bekommt 10 Schaden und hat nur noch ${gegnerWahl.hp} HP.\n")
+                    if (gegnerWahl.kannAngegriffenWerden == true) {
+                        gegnerWahl.hp -= 10
+                        println("${gegnerWahl.name} bekommt 10 Schaden und hat nur noch ${gegnerWahl.hp} HP.\n")
+                    } else {
+                        println("${gegnerWahl.name} ist geschützt und nimmt keinen Schaden!\n")
+                    }
 
                     if (gegnerWahl.hp <= 0) {
                         arena.enemieListe.remove(gegnerWahl)
@@ -181,8 +184,14 @@ fun spielerZug(arena: Arena) {
                     }
 
                 } else {
+
+                    if (arena.enemieListe.elementAt(0).kannAngegriffenWerden == true){
                     arena.enemieListe.elementAt(0).hp -= 10
                     println("${arena.enemieListe.elementAt(0).name} hat 10 Schaden bekommen und hat nun nur noch ${arena.enemieListe.elementAt(0).hp} HP.\n")
+                    } else {
+                        println("${arena.enemieListe.elementAt(0).name} ist geschützt und nimmt keinen Schaden.\n")
+                    }
+
                     if (arena.enemieListe[0].hp == 0) {
                         arena.enemieListe.remove(arena.enemieListe[0])
                         println("Gegner wurde besiegt!\n")
