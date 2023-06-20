@@ -1,9 +1,5 @@
 import characterKlassen.*
 import enemieKlassen.*
-import inventory.SchutzStein
-import inventory.Trank
-import inventory.Wurfmesser
-
 
 val SLEEP_TIME: Long = 0   // Von Gordon übernohmen
 
@@ -31,7 +27,12 @@ fun main() {
 
 
 
-//    Hier beginnt das Spiel
+/*    Hier beginnt das Spiel.
+Das Spiel geht so lange bis entweder alle Gegner oder alle Helden auf den Feld besiegt sind (jeweilige Liste ist leer).
+Gegner sind in der class Arena in der Liste enemieListe
+Helden sind in der class Arena in der Liste charListe
+Gestartet wird mit 3 Helden und einem Boss (Drache) der maximal einen Gehilfen an seine Seite holen kann.
+ */
 
     println("""
         
@@ -58,7 +59,6 @@ fun main() {
     """.trimIndent())
 
     Thread.sleep(SLEEP_TIME)
-
 
     do {
 
@@ -89,6 +89,8 @@ fun spielerZug(arena: Arena) {
 // Auswahl Kampf / Inventory
     for (held in arena.charListe) {
 
+        held.hatSchutzStein = false  // Zum Beginn jeder Runde und Held wird diese Variable wieder zurückgesetzt.
+
         if (arena.enemieListe.size == 0) break
 
         var inventoryItems = arena.inventoryList.keys
@@ -104,6 +106,7 @@ fun spielerZug(arena: Arena) {
         var eingabe = readln()
         var indexStartWahl = eingabe.toInt() - 1
 
+//Wahl des Items
         if (indexStartWahl == 1) {
             println("Welchen Gegenstand möchtest du einsetzen?")
             println(
@@ -118,6 +121,7 @@ fun spielerZug(arena: Arena) {
             var indexGegenstand = eingabeGegenstand.toInt() - 1
             var nameGegenstand = inventoryItems.elementAt(indexGegenstand)
 
+//            Heiltrank wird benutzt, Es kann gewählt werden wer den Heiltrank bekommt
             if(indexGegenstand == 0){
                 var charHeilung = arena.inventoryList[nameGegenstand]!!
                 println("Heiltrank gewählt. Wenn möchtest du Heilen?")
@@ -135,6 +139,7 @@ fun spielerZug(arena: Arena) {
                 println("${held.name} (${held.klasse}) heilt ${geheilter.name} und hat nun ${geheilter.hp} HP.\n")
                 continue
 
+//                Schutzstein wird benutzt; Alle Angriffe von Gegnern werden um 10 Schaden veringert für eine Runde
             } else if (indexGegenstand == 1) {
 
                 println("Schutzstein gewählt. Wenn möchtest du Schützen?")
@@ -149,11 +154,11 @@ fun spielerZug(arena: Arena) {
                 var eingabeCharSchutzStein = readln()
                 var indexCharSchutz = eingabeCharSchutzStein.toInt() - 1
                 var gehschuetzter = arena.charListe.elementAt(indexCharSchutz)
-                gehschuetzter.hatSchutzStein = true
+                gehschuetzter.hatSchutzStein = true // Hier wird die Variable geändert damit der Schutzstein wirkt.
                 println("${gehschuetzter.name} ist jetzt durch einen Schutzstein geschützt.\n")
                 continue
 
-
+// Wurfmesser wird benutzt; Es kann wieder geweählt werden welcher Gegner getroffen werden soll
             } else if (indexGegenstand == 2 ){
                 if (arena.enemieListe.size > 1) {
                     println("Wenn möchtest du engreifen?")
@@ -187,7 +192,10 @@ fun spielerZug(arena: Arena) {
             }
 
 
-
+/* Wenn das Inventar nicht aufgerufen wird sondern gleich ein Angriff stattfinden soll geht es hier los
+Sind mindestens 2 Gegner auf dem Feld wird vorab gefragt welcher Gegner angegriffen werden soll.
+Wird ein Gegner besiegt wird er aus der enemieListe entfernt
+ */
         } else {
             if (arena.enemieListe.size > 1) {
                 println("Wenn möchtest du engreifen?")
@@ -251,7 +259,8 @@ Damit das alles klappt wird eine Kopie der enemieListe erstellt.
     }
 
     /*
-Hier wird kontrolliert ob ein Held noch am Leben ist und aus der Liste entfernt.
+Hier wird kontrolliert ob ein Held noch am Leben ist
+ Wenn der jeweilige Held keine HP mehr hat wird er aus der Liste entfernt und kann nicht mehr angreifen.
  */
     fun heldGestorben(arena: Arena) {
         for (held in arena.charListe) {

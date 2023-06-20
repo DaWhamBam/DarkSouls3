@@ -5,6 +5,14 @@ import SLEEP_TIME
 import characterKlassen.Hero
 import characterKlassen.Worrior
 
+/*
+Der Drache fungiert als erster Gegner (Boss) im spiel.
+Er ist zu Beginn des Spiels bereits aktiv.
+Der Drache und alle anderen Gegner im Spiel haben mehrere Angriffe die durch einen "Würdel", der von 1 - 100 geht, gewählt werden.
+Ein Angriff vom Drachen ist das rufen eines Gehilfen. Es können gleichzeitig nur 2 Gegner (Drache und 1 Gehilfe) im Spiel sein.
+Jder Angriff kann durch ein Block des Helden unterbunden werden.
+Sollte ein Held einen Schutzstein tragen, wird der Schaden aller Attacken für eine Runde um 10 Punkte reduziert.
+ */
 class Dragon(name: String, typ: String, hp: Int):
     Enemie(name, typ, hp) {
 
@@ -13,8 +21,8 @@ class Dragon(name: String, typ: String, hp: Int):
         "Flügelschlag" to 30, // trifft alle
         "Rasierklaue" to 40,
         "Flügelblock" to 0, // schützt eine Runde den aktuellen Char
-        "Hilferuf" to 0, // ruft einen gehilfen zur seite  ---- evtl wieder separate Liste ---- Liste mit verschieden Monstern drinnen die random genommen werden. Maximal kann einer zur Hilfe gerufen werden.
-        "Totbringer" to 65 // ein Angriff der am besten eine geringere Change hat gewählt zu werden als die anderen
+        "Hilferuf" to 0, // ruft einen Gehilfen zur Seite; Liste mit verschieden Monstern die random genommen werden. Maximal kann ein Gegner zur Hilfe gerufen werden.
+        "Totbringer" to 65 // ein Angriff der eine geringere Change hat gewählt zu werden
     )
 
     override fun angriffGegner(hero: Hero, arena: Arena) {
@@ -37,7 +45,7 @@ class Dragon(name: String, typ: String, hp: Int):
         Thread.sleep(SLEEP_TIME)
         var atkName = attacks.keys
 
-        var wuerfel = (87)
+        var wuerfel = (1..100).random()
         when (wuerfel) {
             in 1..35 -> {
                 if (hero.kannAngegriffenWerden == true) {
@@ -158,7 +166,6 @@ class Dragon(name: String, typ: String, hp: Int):
                     Thread.sleep(SLEEP_TIME)
                     var gegnerSchaden = attacks[attacke]!!
                     var opfer = hero
-
 
                     opfer.hp -= gegnerSchaden
                     Thread.sleep(SLEEP_TIME)

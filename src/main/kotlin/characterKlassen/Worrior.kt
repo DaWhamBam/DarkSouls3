@@ -7,6 +7,7 @@ import enemieKlassen.Enemie
 class Worrior(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
 
+//        Die Attacken des Worrior
     override var attacks: MutableMap<String, Int> = mutableMapOf(
         "Schwerthieb" to 50,
         "Rundumschlag" to 30, // trifft alle
@@ -26,7 +27,7 @@ class Worrior(name: String, klasse: String, hp: Int):
             kannAngegriffenWerden = false
 
         } else if(enemie.kannAngegriffenWerden == false){
-            println("${enemie.name} ist geschützt und nimmt kein schaden!")
+            println("${enemie.name} ist geschützt und nimmt kein schaden!\n")
 
         } else {
             var charSchaden = attacks[attacke]!!

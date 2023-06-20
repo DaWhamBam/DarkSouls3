@@ -7,6 +7,7 @@ import enemieKlassen.Enemie
 class Mage(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
 
+//        Die Attacken des Mage
         override var attacks: MutableMap<String, Int> = mutableMapOf(
             "Feuerball" to 50,
             "Inferno" to 30, // trifft alle

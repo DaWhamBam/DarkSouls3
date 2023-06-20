@@ -7,6 +7,7 @@ import enemieKlassen.Enemie
 class Healer(name: String, klasse: String, hp: Int):
     Hero(name, klasse, hp) {
 
+//        Die Attacken des Healer
     override var attacks: MutableMap<String, Int> = mutableMapOf(
         "Handkantenschlag" to 20,
         "Heilen" to 30, // trifft ein einzelnen Char
@@ -20,6 +21,7 @@ class Healer(name: String, klasse: String, hp: Int):
         var attacke = atkWahl()
         var index = atkName.indexOf(attacke)
 
+//        Hier wird gewählt wenn er heilen möchte.
         if (index == 1) {
             var charHeilung = attacks[attacke]!!
             var char = arena.charListe
@@ -41,7 +43,7 @@ class Healer(name: String, klasse: String, hp: Int):
             kannAngegriffenWerden = false
 
         } else if(enemie.kannAngegriffenWerden == false) {
-            println("${enemie.name} ist geschützt und nimmt kein schaden!")
+            println("${enemie.name} ist geschützt und nimmt kein schaden!\n")
 
         }else{
             var charSchaden= attacks[attacke]!!

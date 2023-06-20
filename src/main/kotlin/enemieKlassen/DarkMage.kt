@@ -9,7 +9,7 @@ class DarkMage(name: String, typ: String, hp: Int):
 
     var attacks: MutableMap<String, Int> = mutableMapOf(
         "Feuerball" to 10,
-        "Eispfeil" to 10, // Schaden über 2-5 Runden // noch nicht implementiert
+        "Eisregen" to 10, // trifft alle Helden
         "Elektroblitz" to 10,
         "Schutzschild" to 0, // Schütz eine Runde den Enemie
     )
@@ -18,7 +18,7 @@ class DarkMage(name: String, typ: String, hp: Int):
 
         if (hero.hatSchutzStein == true) {
             attacks["Feuerball"] = 5
-            attacks["Eispfeil"] = 5
+            attacks["Eisregen"] = 5
             attacks["Elektroblitz"] = 5
 
         } else {
