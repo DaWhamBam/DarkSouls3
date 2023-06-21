@@ -7,6 +7,7 @@ import enemieKlassen.Enemie
 class Healer(name: String, category: String, hp: Int):
     Hero(name, category, hp) {
 
+
 //       The attacks of the Healer
     override var attacks: MutableMap<String, Int> = mutableMapOf(
         "Hand punch" to 20,
