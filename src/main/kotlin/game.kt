@@ -1,52 +1,55 @@
 import characterKlassen.*
 import enemieKlassen.*
+import inventory.Item
 
-val SLEEP_TIME: Long = 0   // Von Gordon übernohmen
+val SLEEP_TIME: Long = 2000   // Copy from Gordon
 
 
 fun main() {
 
 
-//    Charaktere
+//    Charactere
 
     val arena = Arena()
 
-    var krieger1 = Worrior("Gladius", "Krieger", 300)
-    var magier1 = Mage("Lenni", "Magier", 300)
-    var heiler1 = Healer("Sienna", "Support", 300)
+    var worrior1 = Worrior("Gladius", "Worrier", 300)
+    var mage1 = Mage("Lenni", "Mage", 300)
+    var healer1 = Healer("Sienna", "Support", 300)
 
-    arena.charListe.add(krieger1)
-    arena.charListe.add(magier1)
-    arena.charListe.add(heiler1)
+    arena.charList.add(worrior1)
+    arena.charList.add(mage1)
+    arena.charList.add(healer1)
 
-//    Gegner
+//    Enemie
 
-    var dragonBoss = Dragon("Smaug", "Feuer", 1000)
+    var dragonBoss = Dragon("Smaug", "Fire", 1000)
 
-    arena.enemieListe.add(dragonBoss)
+    arena.enemieList.add(dragonBoss)
+
+
 
 
 
 /*
-Hier beginnt das Spiel.
-Das Spiel geht so lange bis entweder alle Gegner oder alle Helden auf den Feld besiegt sind (jeweilige Liste ist leer).
-Gegner sind in der class Arena in der Liste enemieListe
-Helden sind in der class Arena in der Liste charListe
-Gestartet wird mit 3 Helden und einem Boss (Drache) der maximal einen Gehilfen an seine Seite holen kann.
+This is where the game begins.
+The game continues until either all enemies or all heroes on the field are defeated (respective list is empty).
+Enemies are in the class Arena in the list enemieList
+Heroes are in the class Arena in the list charList
+You start with 3 heroes and a boss (dragon) who can get a maximum of one helper at his side.
  */
 
     println("""
         
         
         
-    ----------Willkommen!!!---------
+    ----------HERO RPG FIGHT v.1.0!!!---------
     
-    Ein episches Abenteuer erwartet dich.
+    An epic adventure awaits you.
     
-    Du bist mit einer Heldengruppe aus Krieger, Magier und Heiler unterwegs. Euch stellt sich ein 
-    riesiger Drache entgegen. Ihn gilt es zu besigen und die Welt vor seinen Flammen zu schützen!
+    You are traveling with a hero group consisting of warrior, mage and healer. You are confronted by a 
+    a huge dragon. You have to defeat him and protect the world from his flames!
     
-    Viel Erfolg!
+    Good luck!
     
     """.trimIndent())
 
@@ -54,7 +57,7 @@ Gestartet wird mit 3 Helden und einem Boss (Drache) der maximal einen Gehilfen a
 
     println("""
         
-        Der Drache Smaug türmt sich vor euch auf und der Kampf beginnt!
+        The dragon Smaug towers in front of you and the battle begins!
         
         
     """.trimIndent())
@@ -63,139 +66,186 @@ Gestartet wird mit 3 Helden und einem Boss (Drache) der maximal einen Gehilfen a
 
     do {
 
-        spielerZug(arena)
+        playersRound(arena)
 
-        gegnerZug(arena)
+        enemieRound(arena)
 
-        heldGestorben(arena)
+        heroDied(arena)
 
-    } while (arena.charListe.isNotEmpty() && arena.enemieListe.isNotEmpty())
+    } while (arena.charList.isNotEmpty() && arena.enemieList.isNotEmpty())
 
-    if (arena.enemieListe.isEmpty()) {
-        println("Du hast gesiegt die Welt ist gerettet und kann erneut erblühen! Good Job, Mate!")
+    if (arena.enemieList.isEmpty()) {
+        println("You have conquered the world is saved and can flourish again! Good job, mate!")
     } else {
-        println("Das Böse hat gesiegt und die Welt wird untergehen! Blöd gelaufen...")
+        println("Evil has triumphed and the world will end! Too bad...")
     }
 }
 
 
 /*
-Der Angriff der Heldentruppe findet hier statt.
-Anfangs soll entschieden werden ob das Inventar aufgerufen werden soll oder ein Angriff
-stattfinden soll.
-Bevor der Angirff gewählt wird, wird ein Ziel(Gegner) ausgesucht.
+Here begins the actual battle and the round of the heroes.
+At the beginning it should be decided whether the inventory should be called or an attack should
+should take place.
+Before the attack is chosen, a target (opponent) is selected.
  */
-fun spielerZug(arena: Arena) {
+fun playersRound(arena: Arena) {
 
-// Auswahl Kampf / Inventory
-    for (held in arena.charListe) {
+// Choice Fight / Inventory
+    for (hero in arena.charList) {
 
-        held.hatSchutzStein = false  // Zum Beginn jeder Runde und Held wird diese Variable wieder zurückgesetzt.
+        hero.hasProtectionStone = false  // At the beginning of each round and hero, this variable is reset.
 
-        if (arena.enemieListe.size == 0) break
+        if (arena.enemieList.size == 0) break
 
         var inventoryItems = arena.inventoryList.keys
-
-        println("${held.name} (${held.klasse}) ist an der Reihe. Aktuell hast du ${held.hp} HP.")
-        println("Was möchtest du machen?")
-        println(
-            """
-            1: Kampfrunde beginnen!
-            2: Inventar aufrufen
+        var indexStartChoice: Int
+        while (true) {
+            try {
+                println("\n${hero.name} (${hero.category}) is on the turn. Currently you have ${hero.hp} HP.")
+                println("-----------------------")
+                println("What do you want to do?")
+                println(
+                    """
+            ${arena.menueList.elementAt(0)}
+            ${arena.menueList.elementAt(1)}
         """.trimIndent()
-        )
-        var eingabe = readln()
-        var indexStartWahl = eingabe.toInt() - 1
+                )
+                var inputMenue = readln()
+                indexStartChoice = inputMenue.toInt() - 1
+                if (indexStartChoice in 0..1) {
+                    break
+                } else {
+                    println("Wrong input. Please try again.")
+                }
+            } catch (ex: Exception) {
+                println("Wrong input. Please try again.")
+            }
+        }
 
-//  Wahl des Items
-        if (indexStartWahl == 1) {
-            println("Welchen Gegenstand möchtest du einsetzen?")
-            println(
-                """
+
+//  Item choice
+        if (indexStartChoice == 1) {
+            var indexItem: Int
+            var nameItem: Item
+            while (true) {
+                try {
+                    println("---> Which item do you want to use? <---")
+                    println(
+                        """
             1: ${(inventoryItems.elementAt(0).name)}
             2: ${(inventoryItems.elementAt(1).name)}
             3: ${(inventoryItems.elementAt(2).name)}
         """.trimIndent()
-            )
-
-            var eingabeGegenstand = readln()
-            var indexGegenstand = eingabeGegenstand.toInt() - 1
-            var nameGegenstand = inventoryItems.elementAt(indexGegenstand)
-
-//            Heiltrank wird benutzt, Es kann gewählt werden wer den Heiltrank bekommt
-            if(indexGegenstand == 0){
-                var charHeilung = arena.inventoryList[nameGegenstand]!!
-                println("Heiltrank gewählt. Wenn möchtest du Heilen?")
-                println("""
-                1: ${arena.charListe.elementAt(0).name}
-                2: ${arena.charListe.elementAt(1).name}
-                3: ${arena.charListe.elementAt(2).name}
-            """.trimIndent())
-
-                var eingabeCharHeilung = readln()
-                var indexCharGeheilter = eingabeCharHeilung.toInt() - 1
-                var geheilter = arena.charListe.elementAt(indexCharGeheilter)
-                geheilter.hp += charHeilung
-
-                println("${held.name} (${held.klasse}) heilt ${geheilter.name} und hat nun ${geheilter.hp} HP.\n")
-                continue
-
-//                Schutzstein wird benutzt; Alle Angriffe von Gegnern werden um 10 Schaden veringert für eine Runde
-            } else if (indexGegenstand == 1) {
-
-                println("Schutzstein gewählt. Wenn möchtest du Schützen?")
-                println(
-                    """
-                1: ${arena.charListe.elementAt(0).name}
-                2: ${arena.charListe.elementAt(1).name}
-                3: ${arena.charListe.elementAt(2).name}
-            """.trimIndent()
-                )
-
-                var eingabeCharSchutzStein = readln()
-                var indexCharSchutz = eingabeCharSchutzStein.toInt() - 1
-                var gehschuetzter = arena.charListe.elementAt(indexCharSchutz)
-                gehschuetzter.hatSchutzStein = true // Hier wird die Variable geändert damit der Schutzstein wirkt.
-                println("${gehschuetzter.name} ist jetzt durch einen Schutzstein geschützt.\n")
-                continue
-
-// Wurfmesser wird benutzt; Es kann wieder geweählt werden welcher Gegner getroffen werden soll
-            } else if (indexGegenstand == 2 ){
-                if (arena.enemieListe.size > 1) {
-                    println("Wenn möchtest du engreifen?")
-                    println(
-                        """
-            1: ${(arena.enemieListe.elementAt(0).name)}
-            2: ${(arena.enemieListe.elementAt(1).name)}
-        """.trimIndent()
                     )
-                    var eingabe = readln()
-                    var index = eingabe.toInt() - 1
-                    var gegnerWahl = arena.enemieListe.elementAt(index)
-                    if (gegnerWahl.kannAngegriffenWerden == true) {
-                        gegnerWahl.hp -= 10
-                        println("${gegnerWahl.name} bekommt 10 Schaden und hat nur noch ${gegnerWahl.hp} HP.\n")
+
+                    var inputItem = readln()
+                    indexItem = inputItem.toInt() - 1
+                    nameItem = inventoryItems.elementAt(indexItem)
+                    break
+                } catch (ex: Exception) {
+                    println("Wrong input. Please try again.")
+                }
+            }
+
+//            Healing potion is used, It can be chosen who gets the healing potion
+            if(indexItem == 0) {
+                var charHealing = arena.inventoryList[nameItem]!!
+                var indexCharCured: Int
+                var curedHero: Hero
+                while (true){
+                    try {
+                        println("\n ---> Healing potion selected. Who do you want to heal?")
+                        println(
+                            """
+                1: ${arena.charList.elementAt(0).name}
+                2: ${arena.charList.elementAt(1).name}
+                3: ${arena.charList.elementAt(2).name}
+            """.trimIndent()
+                        )
+
+                        var inputCharCured = readln()
+                        indexCharCured = inputCharCured.toInt() - 1
+                        curedHero = arena.charList.elementAt(indexCharCured)
+                        curedHero.hp += charHealing
+
+                        println("\n ---> ${hero.name} (${hero.category}) heals ${curedHero.name} and now he has ${curedHero.hp} HP.\n")
+                        break
+                    } catch (ex: Exception) {
+                        println("Wrong input. Please try again.")
+                    }
+            }
+
+
+//                Protective stone is used; all attacks from enemies are reduced by 10 damage for one round
+            } else if (indexItem == 1) {
+
+                while(true) {
+                    try {
+                        println("\n ---> Protective stone chosen. Who do you want to protect?")
+                        println(
+                            """
+                1: ${arena.charList.elementAt(0).name}
+                2: ${arena.charList.elementAt(1).name}
+                3: ${arena.charList.elementAt(2).name}
+            """.trimIndent()
+                        )
+
+                        var inputCharProtectiveStone = readln()
+                        var indexCharProtect = inputCharProtectiveStone.toInt() - 1
+                        var protected = arena.charList.elementAt(indexCharProtect)
+                        protected.hasProtectionStone = true // Here the variable is changed so that the protection stone works.
+                        println("\n ---> ${protected.name} is now protected by a Protective stone.\n")
+                        break
+                    } catch (ex: Exception) {
+                        println("Wrong input. Please try again.")
+                    }
+                }
+
+// Throwing knife is used; you can choose again which enemy to hit
+            } else if (indexItem == 2 ){
+                if (arena.enemieList.size > 1) {
+
+                    while(true) {
+                        try {
+                            println("\n ---> Throwing knife selected. Who do you want to attack?")
+                            println(
+                                """
+            1: ${(arena.enemieList.elementAt(0).name)}
+            2: ${(arena.enemieList.elementAt(1).name)}
+        """.trimIndent()
+                            )
+                            var inputThrowingKnife = readln()
+                            var indexEnemieChoiceKnife = inputThrowingKnife.toInt() - 1
+                            var enemieChoiceKnife = arena.enemieList.elementAt(indexEnemieChoiceKnife)
+
+                    if (enemieChoiceKnife.canBeAttacked == true) {
+                        enemieChoiceKnife.hp -= 10
+                        println("\n ---> ${enemieChoiceKnife.name} gets 10 damage and has only ${enemieChoiceKnife.hp} HP.\n")
                     } else {
-                        println("${gegnerWahl.name} ist geschützt und nimmt keinen Schaden!\n")
+                        println("\n ---> ${enemieChoiceKnife.name} is protected and does not take damage!\n")
                     }
 
-                    if (gegnerWahl.hp <= 0) {
-                        arena.enemieListe.remove(gegnerWahl)
-                        println("${gegnerWahl.name} wurde besiegt!\n")
+                    if (enemieChoiceKnife.hp <= 0) {
+                        arena.enemieList.remove(enemieChoiceKnife)
+                        println("\n ---> ${enemieChoiceKnife.name} was defeated!\n")
+                    }
+                        } catch (ex: Exception) {
+                            println("Wrong input. Please try again.")
+                        }
                     }
 
                 } else {
 
-                    if (arena.enemieListe.elementAt(0).kannAngegriffenWerden == true){
-                    arena.enemieListe.elementAt(0).hp -= 10
-                    println("${arena.enemieListe.elementAt(0).name} hat 10 Schaden bekommen und hat nun nur noch ${arena.enemieListe.elementAt(0).hp} HP.\n")
+                    if (arena.enemieList.elementAt(0).canBeAttacked == true){
+                    arena.enemieList.elementAt(0).hp -= 10
+                    println("\n ---> ${arena.enemieList.elementAt(0).name} has received 10 damage and now has only ${arena.enemieList.elementAt(0).hp} HP.\n")
                     } else {
-                        println("${arena.enemieListe.elementAt(0).name} ist geschützt und nimmt keinen Schaden.\n")
+                        println("\n ---> ${arena.enemieList.elementAt(0).name} is protected and does not take damage!\n")
                     }
 
-                    if (arena.enemieListe[0].hp == 0) {
-                        arena.enemieListe.remove(arena.enemieListe[0])
-                        println("Gegner wurde besiegt!\n")
+                    if (arena.enemieList[0].hp == 0) {
+                        arena.enemieList.remove(arena.enemieList[0])
+                        println("\n ---> Enemy was defeated!\n")
                         break
                     }
                 }
@@ -203,35 +253,41 @@ fun spielerZug(arena: Arena) {
 
 
 /*
-Wenn das Inventar nicht aufgerufen wird sondern gleich ein Angriff stattfinden soll geht es hier los
-Sind mindestens 2 Gegner auf dem Feld wird vorab gefragt welcher Gegner angegriffen werden soll.
-Wird ein Gegner besiegt wird er aus der enemieListe entfernt
+If the inventory is not called but an attack is to take place immediately, it starts here
+If there are at least 2 enemies on the field, you will be asked which enemy should be attacked.
+If an opponent is defeated, he is removed from the enemie list.
  */
         } else {
-            if (arena.enemieListe.size > 1) {
-                println("Wenn möchtest du engreifen?")
-                println(
-                    """
-            1: ${(arena.enemieListe.elementAt(0).name)}
-            2: ${(arena.enemieListe.elementAt(1).name)}
+            if (arena.enemieList.size > 1) {
+                while (true) {
+                    try {
+                        println("---> Who do you want to attack? <---")
+                        println(
+                            """
+            1: ${(arena.enemieList.elementAt(0).name)}
+            2: ${(arena.enemieList.elementAt(1).name)}
           
         """.trimIndent()
-                )
-                var eingabe = readln()
-                var index = eingabe.toInt() - 1
-                var gegnerWahl = arena.enemieListe.elementAt(index)
-                held.atkChar(gegnerWahl, arena)
+                        )
+                        var inputAttack = readln()
+                        var indexAttack = inputAttack.toInt() - 1
+                        var enemieChoiceAttack = arena.enemieList.elementAt(indexAttack)
+                        hero.atkChar(enemieChoiceAttack, arena)
 
-                if (gegnerWahl.hp <= 0) {
-                    arena.enemieListe.remove(gegnerWahl)
-                    println("${gegnerWahl.name} wurde besiegt!\n")
+                        if (enemieChoiceAttack.hp <= 0) {
+                            arena.enemieList.remove(enemieChoiceAttack)
+                            println("\n ---> ${enemieChoiceAttack.name} was defeated!\n")
+                        }
+                    } catch (ex: Exception) {
+                        println("Wrong input. Please try again.")
+                    }
                 }
 
             } else {
-                held.atkChar(arena.enemieListe[0], arena)
-                if (arena.enemieListe[0].hp == 0) {
-                    arena.enemieListe.remove(arena.enemieListe[0])
-                    println("Gegner wurde besiegt!\n")
+                hero.atkChar(arena.enemieList[0], arena)
+                if (arena.enemieList[0].hp == 0) {
+                    arena.enemieList.remove(arena.enemieList[0])
+                    println("\n ---> Enemy was defeated!\n")
                     break
                 }
             }
@@ -240,42 +296,43 @@ Wird ein Gegner besiegt wird er aus der enemieListe entfernt
 }
 
 
-    /* In der Funktion werden über die for Schleife die einzelnen objekte in der Liste genommen um einen Angriff auszuführen.
-Der Drache wird immer der erste Gegner sein und hat inherhalb der Angriffs Funktion die Möglichkeit weiter Gegner
-erscheinen zu lassen.
-Damit das alles klappt wird eine Kopie der enemieListe erstellt.
+    /*
+    In the function, the for loop takes the individual objects in the list to perform an attack.
+The dragon will always be the first opponent and has within the attack function the possibility to let other
+to appear.
+To make this all work a copy of the enemieList is created.
  */
 
-    fun gegnerZug(arena: Arena) {
-        for (enemie in arena.enemieListe.toList()) {
+    fun enemieRound(arena: Arena) {
+        for (enemie in arena.enemieList.toList()) {
             if (enemie is Dragon) {
                 if (enemie.hp > 0) {
 
-                    var helden = arena.charListe.random()
-                    enemie.angriffGegner(helden, arena)
+                    var heroBoss = arena.charList.random()
+                    enemie.atkEnemie(heroBoss, arena)
                 } else {
-                    arena.enemieListe.remove(enemie)
+                    arena.enemieList.remove(enemie)
                 }
                 continue
             }
             if (enemie.hp > 0) {
 
-                var helden = arena.charListe.random()
-                enemie.angriffGegner(helden, arena)
+                var heroEnemie = arena.charList.random()
+                enemie.atkEnemie(heroEnemie, arena)
             } else {
-                arena.enemieListe.remove(enemie)
+                arena.enemieList.remove(enemie)
             }
         }
     }
 
     /*
-Hier wird kontrolliert ob ein Held noch am Leben ist
- Wenn der jeweilige Held keine HP mehr hat wird er aus der Liste entfernt und kann nicht mehr angreifen.
+Here you can check if a hero is still alive.
+ If the respective hero has no more HP, he is removed from the list and can no longer attack.
  */
-    fun heldGestorben(arena: Arena) {
-        for (held in arena.charListe) {
-            if (held.hp <= 0)
-                arena.charListe.remove((held))
+    fun heroDied(arena: Arena) {
+        for (heroAlive in arena.charList) {
+            if (heroAlive.hp <= 0)
+                arena.charList.remove((heroAlive))
         }
     }
 

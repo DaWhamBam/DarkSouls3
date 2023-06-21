@@ -4,51 +4,51 @@ import Arena
 import SLEEP_TIME
 import enemieKlassen.Enemie
 
-class Healer(name: String, klasse: String, hp: Int):
-    Hero(name, klasse, hp) {
+class Healer(name: String, category: String, hp: Int):
+    Hero(name, category, hp) {
 
-//        Die Attacken des Healer
+//       The attacks of the Healer
     override var attacks: MutableMap<String, Int> = mutableMapOf(
-        "Handkantenschlag" to 20,
-        "Heilen" to 30, // trifft ein einzelnen Char
-        "Schützende Hand" to 0 // schützt eine Runde den aktuellen Char
+        "Hand punch" to 20,
+        "Healing" to 30, // heals one Char
+        "Protection Hand" to 0 // protect one round
     )
 
     override fun atkChar(enemie: Enemie, arena: Arena) {
-        kannAngegriffenWerden = true
+        canBeAttacked = true
 
         var atkName = attacks.keys
-        var attacke = atkWahl()
-        var index = atkName.indexOf(attacke)
+        var attack = atkWahl()
+        var index = atkName.indexOf(attack)
 
-//        Hier wird gewählt wenn er heilen möchte.
+//        Here you choose who you want to heal.
         if (index == 1) {
-            var charHeilung = attacks[attacke]!!
-            var char = arena.charListe
+            var charHealing = attacks[attack]!!
+            var char = arena.charList
             println("""
                 1: ${char.elementAt(0).name}
                 2: ${char.elementAt(1).name}
                 3: ${char.elementAt(2).name}
             """.trimIndent())
-            var eingabeHeilung = readln()
-            var indexHeilung = eingabeHeilung.toInt() - 1
-            var geheilter = arena.charListe.elementAt(indexHeilung)
-            geheilter.hp += charHeilung
+            var inputHealing = readln()
+            var indexHealing = inputHealing.toInt() - 1
+            var cured = arena.charList.elementAt(indexHealing)
+            cured.hp += charHealing
             Thread.sleep(SLEEP_TIME)
-            println("${this.name} (${this.klasse}) heilt ${geheilter.name} und hat nun ${geheilter.hp} HP.\n")
+            println("\n ---> ${this.name} (${this.category}) heals ${cured.name} and has now ${cured.hp} HP.\n")
 
         } else if (index == 2){
             Thread.sleep(SLEEP_TIME)
-            println("${this.name} (${this.klasse}) ist diese Runde geschützt!\n")
-            kannAngegriffenWerden = false
+            println("\n ---> ${this.name} (${this.category}) is protected this round!\n")
+            canBeAttacked = false
 
-        } else if(enemie.kannAngegriffenWerden == false) {
-            println("${enemie.name} ist geschützt und nimmt kein schaden!\n")
+        } else if(enemie.canBeAttacked == false) {
+            println("\n ---> ${enemie.name} is protected and takes no damage!\n")
 
         }else{
-            var charSchaden= attacks[attacke]!!
-            enemie.hp -= charSchaden
-            println("Du triffst!! ${enemie.name} bekommt $charSchaden Schaden und hat nur noch ${enemie.hp} HP\n")
+            var charDamage= attacks[attack]!!
+            enemie.hp -= charDamage
+            println("\n ---> You hit!! ${enemie.name} gets $charDamage HP damage and has only ${enemie.hp} HP left.\n")
 
         }
     }

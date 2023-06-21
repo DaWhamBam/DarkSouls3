@@ -6,18 +6,18 @@ import enemieKlassen.Enemie
 
 
 /*
-Die Oberklasse Hero wird hier definiert. Alle Heldenklassen (Worrior, Mage, Healer) erben von hier.
-Es sind bereits mehr Eigenschaften hinerlegt als tatsächlich genutzt werden.
-Geplant war ein größerer Ausbau der Mechaniken.
-Ungenutzte Eigenschaften sind auskommentiert.
+The Hero superclass is defined here. All hero classes (Worrior, Mage, Healer) inherit from here.
+There are already more traits imposed than are actually used.
+A larger expansion of the mechanics was planned.
+Unused properties are commented out.
  */
-open class Hero(var name: String, var klasse: String, var hp: Int) {
+open class Hero(var name: String, var category: String, var hp: Int) {
 
 //    var isBurning: Boolean = false
 //    var isPoisen: Boolean = false
 //    var isBleeding: Boolean = false
-    var kannAngegriffenWerden = true
-    var hatSchutzStein = false
+    var canBeAttacked = true
+    var hasProtectionStone = false
 //    var strength: Int = 6
 //    var magic: Int = 6
 //    var healing: Int = 6
@@ -27,28 +27,35 @@ open class Hero(var name: String, var klasse: String, var hp: Int) {
 //    var expPoints= 0
     open var attacks: MutableMap<String, Int> = mutableMapOf()
 
-/*    Das ist die eigentlich Methode damit ein Held angreiffen kann. Wird aber in der Unterklasse
-ausgeschrieben da die einzelenen Helden sehr unterschiedlich Funktionieren.
+/*
+This is the actual method for a hero to attack. But it is written out in the subclass
+because the individual heroes function very differently.
  */
     open fun atkChar(enemie: Enemie, arena: Arena) {
-        println("Bitte in Unterklasse überschreiben!")
+        println("Please overwrite in subclass!")
     }
 
-//    Jeder Held beginnt mit der gleichen Methode um die Auswahl der Attacken zu fällen.
-    open fun atkWahl(): String{
+//    Each hero starts with the same method to make the choice of attacks.
+    open fun atkWahl(): String {
 
         var atkName = attacks.keys
-        println("Wähle deinen Angriff!")
-        println(
-            """
-            1: ${(atkName.elementAt(0))}
-            2: ${(atkName.elementAt(1))}
-            3: ${(atkName.elementAt(2))}
-        """.trimIndent()
-        )
-        var eingabe = readln()
-        var index = eingabe.toInt() - 1
-        var attacke = atkName.elementAt(index)
-        return attacke
+        while (true) {
+            try {
+                println("---> Choose your attack! <---")
+                println(
+                    """
+                1: ${(atkName.elementAt(0))}
+                2: ${(atkName.elementAt(1))}
+                3: ${(atkName.elementAt(2))}
+            """.trimIndent()
+                )
+                var inputAtk = readln()
+                var indexAtk = inputAtk.toInt() - 1
+                var attack = atkName.elementAt(indexAtk)
+                return attack
+            } catch (ex: Exception) {
+                println("Wrong input. Please try again.")
+            }
+        }
     }
 }

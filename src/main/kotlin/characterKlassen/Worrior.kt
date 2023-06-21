@@ -1,38 +1,37 @@
 package characterKlassen
 import Arena
 import SLEEP_TIME
-import enemieKlassen.Dragon
 import enemieKlassen.Enemie
 
-class Worrior(name: String, klasse: String, hp: Int):
-    Hero(name, klasse, hp) {
+class Worrior(name: String, category: String, hp: Int):
+    Hero(name, category, hp) {
 
-//        Die Attacken des Worrior
+//        The attacks of the Worrior
     override var attacks: MutableMap<String, Int> = mutableMapOf(
-        "Schwerthieb" to 50,
-        "Rundumschlag" to 30, // trifft alle
-        "Schildblock" to 0 // schützt eine Runde den aktuellen Char
+        "Sword slash" to 50,
+        "All-round slash" to 30, // hits all
+        "Shield block" to 0 // protects one round
     )
 
     override fun atkChar(enemie: Enemie, arena: Arena) {
-        kannAngegriffenWerden = true
+        canBeAttacked = true
 
         var atkName = attacks.keys
-        var attacke = atkWahl()
-        var index = atkName.indexOf(attacke)
+        var attack = atkWahl()
+        var index = atkName.indexOf(attack)
 
         if (index == 2) {
             Thread.sleep(SLEEP_TIME)
-            println("${this.name} (${this.klasse}) ist diese Runde geschützt!\n")
-            kannAngegriffenWerden = false
+            println("\n ---> ${this.name} (${this.category}) is protected this round!\n")
+            canBeAttacked = false
 
-        } else if(enemie.kannAngegriffenWerden == false){
-            println("${enemie.name} ist geschützt und nimmt kein schaden!\n")
+        } else if(enemie.canBeAttacked == false){
+            println("\n ---> ${enemie.name} ist is protected and takes no damage!\n")
 
         } else {
-            var charSchaden = attacks[attacke]!!
-            enemie.hp -= charSchaden
-            println("Du triffst!! ${enemie.name} bekommt $charSchaden Schaden und hat nur noch ${enemie.hp} HP\n")
+            var charDamage = attacks[attack]!!
+            enemie.hp -= charDamage
+            println("\n ---> You hit!! ${enemie.name} gets $charDamage HP damage and has only ${enemie.hp} HP left.\n")
         }
     }
 }
