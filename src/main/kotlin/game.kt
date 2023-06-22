@@ -85,7 +85,7 @@ fun main() {
 
 /*
 Here begins the actual battle and the round of the heroes.
-At the beginning it should be decided whether the inventory should be called or an attack should
+At the beginning it should be decided whether the inventory should be called or an attack
 should take place.
 Before the attack is chosen, a target (opponent) is selected.
  */
