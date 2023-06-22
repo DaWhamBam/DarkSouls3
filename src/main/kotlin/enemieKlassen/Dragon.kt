@@ -12,7 +12,7 @@ An attack from the dragon is calling a helper. Only 2 opponents (dragon and 1 he
 Each attack can be stopped by a block of the hero.
 If a hero wears a protection stone, the damage of all attacks is reduced by 10 points for one round.
  */
-class Dragon(name: String, typ: String, hp: Int):
+class Dragon(name: String, typ: String, hp: Int) :
     Enemie(name, typ, hp) {
 
     var attacks: MutableMap<String, Int> = mutableMapOf(
@@ -56,7 +56,7 @@ class Dragon(name: String, typ: String, hp: Int):
                     victimHero.hp -= enemieDamage
                     Thread.sleep(SLEEP_TIME)
                     println("\n ---> ${victimHero.name} gets $enemieDamage HP damage and has only ${victimHero.hp} HP left!!\n")
-                } else{
+                } else {
                     var attack = atkName.elementAt(0)
                     println("${this.name} attacks with $attack!!")
                     Thread.sleep(SLEEP_TIME)
@@ -74,28 +74,28 @@ class Dragon(name: String, typ: String, hp: Int):
                     var victimHero2 = arena.charList.elementAt(1)
                     var victimHero3 = arena.charList.elementAt(2)
 
-                    if(victimHero1.canBeAttacked == true){
+                    if (victimHero1.canBeAttacked == true) {
                         victimHero1.hp -= enemieDamage
                         println("\n ---> ${victimHero1.name} gets $enemieDamage HP damage and has only ${victimHero1.hp} HP left!!")
                     } else {
                         println("\n ---> ${victimHero1.name} is protected this round!!")
                     }
 
-                    if(victimHero2.canBeAttacked == true){
+                    if (victimHero2.canBeAttacked == true) {
                         victimHero2.hp -= enemieDamage
                         println("\n ---> ${victimHero2.name} gets $enemieDamage HP damage and has only ${victimHero2.hp} HP left!!")
                     } else {
                         println("\n ---> ${victimHero2.name} is protected this round!!")
                     }
 
-                    if(victimHero3.canBeAttacked == true){
+                    if (victimHero3.canBeAttacked == true) {
                         victimHero3.hp -= enemieDamage
                         println("\n ---> ${victimHero3.name} gets $enemieDamage HP damage and has only ${victimHero3.hp} HP left!!\n")
                     } else {
                         println("\n ---> ${victimHero3.name} is protected this round!!\n")
                     }
 
-                } else{
+                } else {
                     var attack = atkName.elementAt(1)
                     println("${this.name} attacks with $attack!!")
                     Thread.sleep(SLEEP_TIME)
@@ -113,7 +113,7 @@ class Dragon(name: String, typ: String, hp: Int):
                     victimHero.hp -= enemieDamage
                     Thread.sleep(SLEEP_TIME)
                     println("\n ---> ${victimHero.name} gets $enemieDamage HP damage and has only ${victimHero.hp} HP left!!\n")
-                } else{
+                } else {
                     var attack = atkName.elementAt(2)
                     println("${this.name} attacks with $attack!!")
                     Thread.sleep(SLEEP_TIME)
@@ -170,7 +170,7 @@ class Dragon(name: String, typ: String, hp: Int):
                     Thread.sleep(SLEEP_TIME)
                     println("\n ---> ${victimHero.name} gets $enemieDamage HP damage and has only ${victimHero.hp} HP left!!\n")
 
-                } else{
+                } else {
                     var attack = atkName.elementAt(5)
                     println("${this.name} attacks with $attack!!")
                     Thread.sleep(SLEEP_TIME)

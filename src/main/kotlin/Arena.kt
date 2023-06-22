@@ -6,9 +6,9 @@ import inventory.Potion
 import inventory.ThrowingKnife
 
 class Arena {
-/*
-Here are the lists of enemies, heroes and the inventory.
- */
+    /*
+    Here are the lists of enemies, heroes and the inventory.
+     */
     var charList: MutableList<Hero> = mutableListOf()
     var enemieList: MutableList<Enemie> = mutableListOf()
     var inventoryList: MutableMap<Item, Int> = mutableMapOf(

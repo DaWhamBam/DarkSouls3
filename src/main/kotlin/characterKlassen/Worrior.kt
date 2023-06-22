@@ -1,12 +1,13 @@
 package characterKlassen
+
 import Arena
 import SLEEP_TIME
 import enemieKlassen.Enemie
 
-class Worrior(name: String, category: String, hp: Int):
+class Worrior(name: String, category: String, hp: Int) :
     Hero(name, category, hp) {
 
-//        The attacks of the Worrior
+    //        The attacks of the Worrior
     override var attacks: MutableMap<String, Int> = mutableMapOf(
         "Sword slash" to 50,
         "All-round slash" to 30, // hits all
@@ -25,7 +26,7 @@ class Worrior(name: String, category: String, hp: Int):
             println("\n ---> ${this.name} (${this.category}) is protected this round!\n")
             canBeAttacked = false
 
-        } else if(enemie.canBeAttacked == false){
+        } else if (enemie.canBeAttacked == false) {
             println("\n ---> ${enemie.name} ist is protected and takes no damage!\n")
 
         } else {

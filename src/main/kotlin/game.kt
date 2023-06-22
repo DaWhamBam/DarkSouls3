@@ -27,18 +27,16 @@ fun main() {
     arena.enemieList.add(dragonBoss)
 
 
+    /*
+    This is where the game begins.
+    The game continues until either all enemies or all heroes on the field are defeated (respective list is empty).
+    Enemies are in the class Arena in the list enemieList
+    Heroes are in the class Arena in the list charList
+    You start with 3 heroes and a boss (dragon) who can get a maximum of one helper at his side.
+     */
 
-
-
-/*
-This is where the game begins.
-The game continues until either all enemies or all heroes on the field are defeated (respective list is empty).
-Enemies are in the class Arena in the list enemieList
-Heroes are in the class Arena in the list charList
-You start with 3 heroes and a boss (dragon) who can get a maximum of one helper at his side.
- */
-
-    println("""
+    println(
+        """
         
         
         
@@ -51,16 +49,19 @@ You start with 3 heroes and a boss (dragon) who can get a maximum of one helper 
     
     Good luck!
     
-    """.trimIndent())
+    """.trimIndent()
+    )
 
     Thread.sleep(SLEEP_TIME)
 
-    println("""
+    println(
+        """
         
         The dragon Smaug towers in front of you and the battle begins!
         
         
-    """.trimIndent())
+    """.trimIndent()
+    )
 
     Thread.sleep(SLEEP_TIME)
 
@@ -148,11 +149,11 @@ fun playersRound(arena: Arena) {
             }
 
 //            Healing potion is used, It can be chosen who gets the healing potion
-            if(indexItem == 0) {
+            if (indexItem == 0) {
                 var charHealing = arena.inventoryList[nameItem]!!
                 var indexCharCured: Int
                 var curedHero: Hero
-                while (true){
+                while (true) {
                     try {
                         println("\n ---> Healing potion selected. Who do you want to heal?")
                         println(
@@ -173,13 +174,13 @@ fun playersRound(arena: Arena) {
                     } catch (ex: Exception) {
                         println("Wrong input. Please try again.")
                     }
-            }
+                }
 
 
 //                Protective stone is used; all attacks from enemies are reduced by 10 damage for one round
             } else if (indexItem == 1) {
 
-                while(true) {
+                while (true) {
                     try {
                         println("\n ---> Protective stone chosen. Who do you want to protect?")
                         println(
@@ -193,7 +194,8 @@ fun playersRound(arena: Arena) {
                         var inputCharProtectiveStone = readln()
                         var indexCharProtect = inputCharProtectiveStone.toInt() - 1
                         var protected = arena.charList.elementAt(indexCharProtect)
-                        protected.hasProtectionStone = true // Here the variable is changed so that the protection stone works.
+                        protected.hasProtectionStone =
+                            true // Here the variable is changed so that the protection stone works.
                         println("\n ---> ${protected.name} is now protected by a Protective stone.\n")
                         break
                     } catch (ex: Exception) {
@@ -202,10 +204,10 @@ fun playersRound(arena: Arena) {
                 }
 
 // Throwing knife is used; you can choose again which enemy to hit
-            } else if (indexItem == 2 ){
+            } else if (indexItem == 2) {
                 if (arena.enemieList.size > 1) {
 
-                    while(true) {
+                    while (true) {
                         try {
                             println("\n ---> Throwing knife selected. Who do you want to attack?")
                             println(
@@ -218,17 +220,17 @@ fun playersRound(arena: Arena) {
                             var indexEnemieChoiceKnife = inputThrowingKnife.toInt() - 1
                             var enemieChoiceKnife = arena.enemieList.elementAt(indexEnemieChoiceKnife)
 
-                    if (enemieChoiceKnife.canBeAttacked == true) {
-                        enemieChoiceKnife.hp -= 10
-                        println("\n ---> ${enemieChoiceKnife.name} gets 10 damage and has only ${enemieChoiceKnife.hp} HP.\n")
-                    } else {
-                        println("\n ---> ${enemieChoiceKnife.name} is protected and does not take damage!\n")
-                    }
+                            if (enemieChoiceKnife.canBeAttacked == true) {
+                                enemieChoiceKnife.hp -= 10
+                                println("\n ---> ${enemieChoiceKnife.name} gets 10 damage and has only ${enemieChoiceKnife.hp} HP.\n")
+                            } else {
+                                println("\n ---> ${enemieChoiceKnife.name} is protected and does not take damage!\n")
+                            }
 
-                    if (enemieChoiceKnife.hp <= 0) {
-                        arena.enemieList.remove(enemieChoiceKnife)
-                        println("\n ---> ${enemieChoiceKnife.name} was defeated!\n")
-                    }
+                            if (enemieChoiceKnife.hp <= 0) {
+                                arena.enemieList.remove(enemieChoiceKnife)
+                                println("\n ---> ${enemieChoiceKnife.name} was defeated!\n")
+                            }
                         } catch (ex: Exception) {
                             println("Wrong input. Please try again.")
                         }
@@ -236,9 +238,15 @@ fun playersRound(arena: Arena) {
 
                 } else {
 
-                    if (arena.enemieList.elementAt(0).canBeAttacked == true){
-                    arena.enemieList.elementAt(0).hp -= 10
-                    println("\n ---> ${arena.enemieList.elementAt(0).name} has received 10 damage and now has only ${arena.enemieList.elementAt(0).hp} HP.\n")
+                    if (arena.enemieList.elementAt(0).canBeAttacked == true) {
+                        arena.enemieList.elementAt(0).hp -= 10
+                        println(
+                            "\n ---> ${arena.enemieList.elementAt(0).name} has received 10 damage and now has only ${
+                                arena.enemieList.elementAt(
+                                    0
+                                ).hp
+                            } HP.\n"
+                        )
                     } else {
                         println("\n ---> ${arena.enemieList.elementAt(0).name} is protected and does not take damage!\n")
                     }
@@ -252,11 +260,11 @@ fun playersRound(arena: Arena) {
             }
 
 
-/*
-If the inventory is not called but an attack is to take place immediately, it starts here
-If there are at least 2 enemies on the field, you will be asked which enemy should be attacked.
-If an opponent is defeated, he is removed from the enemie list.
- */
+            /*
+            If the inventory is not called but an attack is to take place immediately, it starts here
+            If there are at least 2 enemies on the field, you will be asked which enemy should be attacked.
+            If an opponent is defeated, he is removed from the enemie list.
+             */
         } else {
             if (arena.enemieList.size > 1) {
                 while (true) {
@@ -296,44 +304,44 @@ If an opponent is defeated, he is removed from the enemie list.
 }
 
 
-    /*
-    In the function, the for loop takes the individual objects in the list to perform an attack.
+/*
+In the function, the for loop takes the individual objects in the list to perform an attack.
 The dragon will always be the first opponent and has within the attack function the possibility to let other
 to appear.
 To make this all work a copy of the enemieList is created.
- */
+*/
 
-    fun enemieRound(arena: Arena) {
-        for (enemie in arena.enemieList.toList()) {
-            if (enemie is Dragon) {
-                if (enemie.hp > 0) {
-
-                    var heroBoss = arena.charList.random()
-                    enemie.atkEnemie(heroBoss, arena)
-                } else {
-                    arena.enemieList.remove(enemie)
-                }
-                continue
-            }
+fun enemieRound(arena: Arena) {
+    for (enemie in arena.enemieList.toList()) {
+        if (enemie is Dragon) {
             if (enemie.hp > 0) {
 
-                var heroEnemie = arena.charList.random()
-                enemie.atkEnemie(heroEnemie, arena)
+                var heroBoss = arena.charList.random()
+                enemie.atkEnemie(heroBoss, arena)
             } else {
                 arena.enemieList.remove(enemie)
             }
+            continue
         }
-    }
+        if (enemie.hp > 0) {
 
-    /*
-Here you can check if a hero is still alive.
- If the respective hero has no more HP, he is removed from the list and can no longer attack.
- */
-    fun heroDied(arena: Arena) {
-        for (heroAlive in arena.charList) {
-            if (heroAlive.hp <= 0)
-                arena.charList.remove((heroAlive))
+            var heroEnemie = arena.charList.random()
+            enemie.atkEnemie(heroEnemie, arena)
+        } else {
+            arena.enemieList.remove(enemie)
         }
     }
+}
+
+/*
+Here you can check if a hero is still alive.
+If the respective hero has no more HP, he is removed from the list and can no longer attack.
+*/
+fun heroDied(arena: Arena) {
+    for (heroAlive in arena.charList) {
+        if (heroAlive.hp <= 0)
+            arena.charList.remove((heroAlive))
+    }
+}
 
 

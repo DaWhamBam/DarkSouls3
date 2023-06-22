@@ -1,12 +1,4 @@
-fun main(){
-
-
-
-
-
-
-
-
+fun main() {
 
 
 }

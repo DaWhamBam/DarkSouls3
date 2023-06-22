@@ -1,7 +1,6 @@
 package inventory
 
-class ProtectionStone(name: String, category: String): Item(name, category) {
-
+class ProtectionStone(name: String, category: String) : Item(name, category) {
 
 
 }
