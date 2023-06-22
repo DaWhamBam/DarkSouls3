@@ -306,8 +306,7 @@ fun playersRound(arena: Arena) {
 
 /*
 In the function, the for loop takes the individual objects in the list to perform an attack.
-The dragon will always be the first opponent and has within the attack function the possibility to let other
-to appear.
+The dragon will always be the first opponent and has within the attack function the possibility to let other to appear.
 To make this all work a copy of the enemieList is created.
 */
 
