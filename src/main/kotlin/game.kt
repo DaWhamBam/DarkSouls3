@@ -289,6 +289,7 @@ fun playersRound(arena: Arena) {
                         if (enemieChoiceAttack.hp <= 0) {
                             arena.enemieList.remove(enemieChoiceAttack)
                             println("\n ---> ${enemieChoiceAttack.name} was defeated!\n")
+                            break
                         } else {
                             break
                         }
