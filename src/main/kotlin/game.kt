@@ -7,7 +7,6 @@ val SLEEP_TIME: Long = 2000   // Copy from Gordon
 
 fun main() {
 
-
 //    Charactere
 
     val arena = Arena()
@@ -38,16 +37,24 @@ fun main() {
     println(
         """
         
-        
-        
-    ----------HERO RPG FIGHT v.1.0!!!---------
-    
-    An epic adventure awaits you.
-    
-    You are traveling with a hero group consisting of warrior, mage and healer. You are confronted by a 
-    a huge dragon. You have to defeat him and protect the world from his flames!
-    
-    Good luck!
+
+         _______                     ______ ______ _______ 
+        |   |   |.-----.----.-----. |   __ \   __ \     __|
+        |       ||  -__|   _|  _  | |      <    __/    |  |
+        |___|___||_____|__| |_____| |___|__|___|  |_______|
+                                                           
+         _______ __         __     __     ____      ______ 
+        |    ___|__|.-----.|  |--.|  |_  |_   |    |      |
+        |    ___|  ||  _  ||     ||   _|  _|  |_ __|  --  |
+        |___|   |__||___  ||__|__||____| |______|__|______|
+                    |_____|                                
+
+            An epic adventure awaits you.
+            
+            You are traveling with a hero group consisting of warrior, mage and healer. You are confronted by a 
+            a huge dragon. You have to defeat him and protect the world from his flames!
+            
+            Good luck!
     
     """.trimIndent()
     )
@@ -57,9 +64,13 @@ fun main() {
     println(
         """
         
-        The dragon Smaug towers in front of you and the battle begins!
         
-        
+ _______ __            ______         __   __   __          ______               __               __ __ 
+|_     _|  |--.-----. |   __ \.---.-.|  |_|  |_|  |.-----. |   __ \.-----.-----.|__|.-----.-----.|  |  |
+  |   | |     |  -__| |   __ <|  _  ||   _|   _|  ||  -__| |   __ <|  -__|  _  ||  ||     |__ --||__|__|
+  |___| |__|__|_____| |______/|___._||____|____|__||_____| |______/|_____|___  ||__||__|__|_____||__|__|
+                                                                         |_____|                        
+
     """.trimIndent()
     )
 
@@ -123,7 +134,6 @@ fun playersRound(arena: Arena) {
             }
         }
 
-
 //  Item choice
         if (indexStartChoice == 1) {
             var indexItem: Int
@@ -175,7 +185,6 @@ fun playersRound(arena: Arena) {
                         println("Wrong input. Please try again.")
                     }
                 }
-
 
 //                Protective stone is used; all attacks from enemies are reduced by 10 damage for one round
             } else if (indexItem == 1) {
@@ -241,11 +250,7 @@ fun playersRound(arena: Arena) {
                     if (arena.enemieList.elementAt(0).canBeAttacked == true) {
                         arena.enemieList.elementAt(0).hp -= 10
                         println(
-                            "\n ---> ${arena.enemieList.elementAt(0).name} has received 10 damage and now has only ${
-                                arena.enemieList.elementAt(
-                                    0
-                                ).hp
-                            } HP.\n"
+                            "\n ---> ${arena.enemieList.elementAt(0).name} has received 10 damage and now has only ${arena.enemieList.elementAt(0).hp} HP left.\n"
                         )
                     } else {
                         println("\n ---> ${arena.enemieList.elementAt(0).name} is protected and does not take damage!\n")
@@ -258,7 +263,6 @@ fun playersRound(arena: Arena) {
                     }
                 }
             }
-
 
             /*
             If the inventory is not called but an attack is to take place immediately, it starts here
@@ -285,6 +289,8 @@ fun playersRound(arena: Arena) {
                         if (enemieChoiceAttack.hp <= 0) {
                             arena.enemieList.remove(enemieChoiceAttack)
                             println("\n ---> ${enemieChoiceAttack.name} was defeated!\n")
+                        } else {
+                            break
                         }
                     } catch (ex: Exception) {
                         println("Wrong input. Please try again.")
@@ -302,7 +308,6 @@ fun playersRound(arena: Arena) {
         }
     }
 }
-
 
 /*
 In the function, the for loop takes the individual objects in the list to perform an attack.
